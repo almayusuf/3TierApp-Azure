@@ -5,6 +5,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "linuxss" {
   sku                 = "Standard_F2"
   instances           = 2
   admin_username      = "adminuser"
+  computer_name_prefix = "vm-"
+#   user_data = filebase64("/home/ec2-user/3TierApp-Azure/wordpress.sh"))
 
   admin_ssh_key {
     username   = "adminuser"
