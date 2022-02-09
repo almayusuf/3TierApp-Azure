@@ -6,7 +6,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "linuxss" {
   instances           = 2
   admin_username      = "adminuser"
   computer_name_prefix = "linuxssvm"
-#   user_data = filebase64("/home/ec2-user/3TierApp-Azure/wordpress.sh")
+  user_data = filebase64("/home/ec2-user/3TierApp-Azure/wordpress.sh")
 
   admin_ssh_key {
     username   = "adminuser"
@@ -30,23 +30,23 @@ resource "azurerm_linux_virtual_machine_scale_set" "linuxss" {
     primary = true
 
     ip_configuration {
-      name      = "public2"
+      name      = "public1"
       primary   = true
-      subnet_id = azurerm_subnet.subnet2.id
+      subnet_id = azurerm_subnet.subnet1.id
     }
   }
 }
 
 
 
-resource "azurerm_linux_virtual_machine" "linuxssvm" {
+resource "azurerm_linux_virtual_machine" "linuxvm" {
   name                = "linuxssvm"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = "Standard_F2"
   admin_username      = "adminuser"
   network_interface_ids = [
-    azurerm_network_interface.nic2.id,
+    azurerm_network_interface.nic1.id,
   ]
   admin_ssh_key {
     username   = "adminuser"
@@ -63,7 +63,3 @@ resource "azurerm_linux_virtual_machine" "linuxssvm" {
     version   = "latest"
   }
 }
-
-
-
-
